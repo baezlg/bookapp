@@ -8,31 +8,37 @@
 
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import { BrowserRouter } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 import { GlobalStyle } from 'styles/global-styles';
-
-import { HomePage } from './pages/HomePage/Loadable';
-import { NotFoundPage } from './pages/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
+import MomentUtils from '@date-io/moment';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import Router from './routes';
+import MainLayout from './layouts/main-layout';
 
 export function App() {
   const { i18n } = useTranslation();
   return (
     <BrowserRouter>
-      <Helmet
-        titleTemplate="%s - React Boilerplate"
-        defaultTitle="React Boilerplate"
-        htmlAttributes={{ lang: i18n.language }}
-      >
-        <meta name="description" content="A React Boilerplate application" />
-      </Helmet>
-
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      <GlobalStyle />
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <SnackbarProvider dense maxSnack={3}>
+          <Helmet
+            titleTemplate="%s - React Boilerplate"
+            defaultTitle="React Boilerplate"
+            htmlAttributes={{ lang: i18n.language }}
+          >
+            <meta
+              name="description"
+              content="A React Boilerplate application"
+            />
+          </Helmet>
+          <MainLayout>
+            <Router />
+          </MainLayout>
+          <GlobalStyle />
+        </SnackbarProvider>
+      </MuiPickersUtilsProvider>
     </BrowserRouter>
   );
 }

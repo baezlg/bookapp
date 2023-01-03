@@ -8,9 +8,7 @@ const prettierOptions = JSON.parse(
 module.exports = {
   extends: ['react-app', 'prettier'],
   plugins: ['prettier'],
-  rules: {
-    'prettier/prettier': ['error', prettierOptions],
-  },
+  rules: { 'prettier/prettier': ['error', { endOfLine: 'auto' }] },
   overrides: [
     {
       files: ['**/*.ts?(x)'],
